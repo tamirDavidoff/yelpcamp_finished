@@ -1,0 +1,57 @@
+<% include ../partials/header %>
+
+<% if(currentUser && currentUser.isAdmin){ %>
+    <h1>Hey Tamir</h1>   
+<% } %>
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Campgrounds Page</h1>
+            <p>You are in the campgrounds From all over the world</p>
+            <p>
+                <a class="btn btn-primary" href="/campgrounds/new">Add New</a>
+            </p>
+            <p>
+                <form action="/campgrounds" method="GET" class="form-inline"> 
+                    <div class="form group">
+                        <input class="form-control" type="text" name="search" placeholder="Campgrounds Search...">
+                        <input class="btn btn-default" type="submit" value="search" class="">
+                    </div>
+                </form>
+            </p>
+        </div>
+    </header>
+
+    <div class="row text-center">
+        <div class="col-md-12">
+            <% if(noMatch !== null) { %>
+             <h4 class="alert alert-info"> <%= noMatch %> </h3>   
+          <%   } %>
+        </div>
+        <% campgrounds.forEach(function(campground){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img class="img-fluid" src="<%= campground.image %>">
+                    <div class="caption">
+                        <h4><%= campground.name %></h4>
+                        <% if (campground.rating === 0) { %>
+                        <em>No reviews yet.</em>
+                        <% } else { %>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star <% if (campground.rating > 1.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (campground.rating > 2.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (campground.rating > 3.5) { %> checked <% } %>"></span>
+                        <span class="fa fa-star <% if (campground.rating > 4.5) { %> checked <% } %>"></span>
+                        <% } %>
+                    </div>
+                     <p><a href="/campgrounds/<%= campground._id %>" class="btn btn-primary" > More Info</a></p>
+                </div>
+               
+                
+            </div>
+        <% }); %>
+    </div>
+
+
+
+
+<% include ../partials/footer %>
